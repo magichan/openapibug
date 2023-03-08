@@ -1,0 +1,134 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/pet/v1/pet.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "PetStore"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/pets/{petId}": {
+      "get": {
+        "operationId": "PetStore_GetPet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "PetStore"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1GetPetResponse": {
+      "type": "object",
+      "properties": {
+        "pet": {
+          "$ref": "#/definitions/v1Pet"
+        }
+      }
+    },
+    "v1Pet": {
+      "type": "object",
+      "properties": {
+        "petType": {
+          "$ref": "#/definitions/v1PetType"
+        },
+        "petId": {
+          "type": "string",
+          "title": "field comment as title[it work]"
+        },
+        "name": {
+          "type": "string",
+          "title": "options comment as title[it work]"
+        },
+        "petCategory": {
+          "$ref": "#/definitions/v1PetCategory",
+          "title": "field comment as title[it don't work]"
+        },
+        "petCategory2": {
+          "$ref": "#/definitions/v1PetCategory",
+          "title": "options comment as title[it don't work]"
+        }
+      },
+      "description": "Pet represents a pet in the pet store."
+    },
+    "v1PetCategory": {
+      "type": "string",
+      "enum": [
+        "PET_CATEGORY_UNSPECIFIED",
+        "PET_CATEGORY_MAMMAL",
+        "PET_CATEGORY_REPTILIAN"
+      ],
+      "default": "PET_CATEGORY_UNSPECIFIED"
+    },
+    "v1PetType": {
+      "type": "string",
+      "enum": [
+        "PET_TYPE_UNSPECIFIED",
+        "PET_TYPE_CAT",
+        "PET_TYPE_DOG",
+        "PET_TYPE_SNAKE",
+        "PET_TYPE_HAMSTER"
+      ],
+      "default": "PET_TYPE_UNSPECIFIED",
+      "title": "pet type enum comment as title[it work]"
+    }
+  }
+}

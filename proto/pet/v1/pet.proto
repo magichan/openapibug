@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/api/annotations.proto";
+
+package pet.v1;
+
+// pet type enum comment as title[it work]
+enum PetType {
+  PET_TYPE_UNSPECIFIED = 0;
+  PET_TYPE_CAT = 1;
+  PET_TYPE_DOG = 2;
+  PET_TYPE_SNAKE = 3;
+  PET_TYPE_HAMSTER = 4;
+}
+
+enum PetCategory {
+  PET_CATEGORY_UNSPECIFIED = 0;
+  PET_CATEGORY_MAMMAL = 1;
+  PET_CATEGORY_REPTILIAN = 2;
+}
+
+// Pet represents a pet in the pet store.
+message Pet {
+  PetType pet_type = 1;
+  // field comment as title[it work]
+  string pet_id = 2;
+  string name = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    title: "options comment as title[it work]"
+  }];
+  // field comment as title[it don't work]
+  PetCategory pet_category = 4;
+  PetCategory pet_category_2 = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    title: "options comment as title[it don't work]"
+  }];
+}
+
+message GetPetRequest {
+  string pet_id = 1;
+}
+
+message GetPetResponse {
+  Pet pet = 1;
+}
+
+service PetStore {
+  rpc GetPet(GetPetRequest) returns (GetPetResponse) {
+    option (google.api.http) = {
+      get: "/v1/pets/{pet_id}"
+    };
+  };
+}
